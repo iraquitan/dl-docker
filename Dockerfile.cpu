@@ -1,11 +1,11 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
-MAINTAINER Sai Soundararaj <saip@outlook.com>
+MAINTAINER Iraquitan Cordeiro Filho <iraquitanfilho@gmail.com>
 
-ARG THEANO_VERSION=rel-0.8.2
-ARG TENSORFLOW_VERSION=0.12.1 
+ARG THEANO_VERSION=rel-0.9.0
+ARG TENSORFLOW_VERSION=1.0.1 
 ARG TENSORFLOW_ARCH=cpu
-ARG KERAS_VERSION=1.2.0
+ARG KERAS_VERSION=2.0.3
 ARG LASAGNE_VERSION=v0.1
 ARG TORCH_VERSION=latest
 ARG CAFFE_VERSION=master
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 		liblcms2-dev \
 		libopenblas-dev \
 		liblapack-dev \
-		libopenjpeg2 \
+		libopenjpeg-dev \
 		libpng12-dev \
 		libssl-dev \
 		libtiff5-dev \
@@ -184,6 +184,8 @@ RUN pip --no-cache-dir install git+git://github.com/fchollet/keras.git@${KERAS_V
 # Install Lasagne
 RUN pip --no-cache-dir install git+git://github.com/Lasagne/Lasagne.git@${LASAGNE_VERSION}
 
+# Add sudo back
+RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
 
 # Install Torch
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && \
